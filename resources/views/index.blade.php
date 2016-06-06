@@ -36,7 +36,7 @@
             <form action="javascript: postForm()">
                 <input id="inputBox" type="text" class="input_box"/>
             </form>
-            <div id="downloadedImageOuter">
+            <div id="downloadedImageOuter" style="display: none">
                 <div style="font-size: 80px;color: purple">Your Imagz:</div>
                 <div id="downloadedImageInner">
                 </div>

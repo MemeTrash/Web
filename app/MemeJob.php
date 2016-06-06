@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Pusher;
 
 /**
@@ -11,7 +12,7 @@ use Pusher;
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class MemeJob
+class MemeJob implements ShouldQueue
 {
     /**
      * The pusher channel name.
@@ -64,6 +65,6 @@ class MemeJob
             $images[] = $client->generate($id, $this->text);
         }
 
-        $pusher->trigger($this->task, self::LOL, ['ids' => $images]);
+        $pusher->trigger($this->task, self::CHANNEL, ['ids' => $images]);
     }
 }

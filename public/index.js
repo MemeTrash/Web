@@ -45,6 +45,7 @@ function getImages(query) {
                 newImage.src = "result/" + id;
                 imageCont.appendChild(newImage);
             });
+            document.getElementById("downloadedImageOuter").style.display = "block";
             document.getElementById("downloadedImageOuter").replaceChild(imageCont, document.getElementById("downloadedImageInner"))
             hideLoadingScreen();
         });

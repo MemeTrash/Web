@@ -40,12 +40,13 @@ function getImages(query) {
         var channel = pusher.subscribe(httpData.data.task);
         channel.bind("lol", function (pusherData) {
             var imageCont = document.createElement("div");
+            imageCont.id = "downloadedImageInner"
             pusherData.message.ids.forEach(function (id) {
                 var newImage = document.createElement("img");
                 newImage.src = "result/" + id;
                 imageCont.appendChild(newImage);
             });
-            document.getElementById("downloadedImageOuter").appendChild(imageCont);
+            document.getElementById("downloadedImageOuter").replaceChild(imageCont, document.getElementById("downloadedImageInner"))
             hideLoadingScreen();
         });
     }).fail(function (error) {

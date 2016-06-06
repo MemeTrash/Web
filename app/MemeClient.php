@@ -57,13 +57,13 @@ class MemeClient
     {
         $name = str_random(16);
 
-        $command = "{$this->generator} \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$text}\"";
+        $resources = dirname($this->generator.'/resources');
+
+        $command = "{$this->generator} \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$resources}\" \"{$text}\"";
 
         app('Psr\Log\LoggerInterface')->info($command);
 
         $process = new Process($command);
-
-        $process->setWorkingDirectory(dirname($this->generator));
 
         $process->run();
 

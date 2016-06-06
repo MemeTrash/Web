@@ -34,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->register(MemeClient::class, function (Container $app) {
-            return new Client($app->config->get('services.meme.generator'), $app->basePath('resources/img'), $app->basePath('public/result'));
+        $this->app->bind(MemeClient::class, function (Container $app) {
+            return new MemeClient($app->config->get('services.meme.generator'), $app->basePath('resources/img'), $app->basePath('public/result'));
         });
 
         $this->app->get('/', function () {

@@ -59,7 +59,7 @@ class MemeClient
 
         $resources = dirname($this->generator.'/resources');
 
-        $command = "{$this->generator} \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$resources}\" \"{$text}\"";
+        $command = "python {$this->generator} \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$resources}\" \"{$text}\"";
 
         app('Psr\Log\LoggerInterface')->info($command);
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Meme\Client;
+use App\MemeClient;
 use Pusher;
 
 /**
@@ -52,12 +52,12 @@ class MemeJob
     /**
      * Handle the meme job.
      *
-     * @param \App\Meme\Client $client
-     * @param \Pusher          $pusher
+     * @param \App\MemeClient $client
+     * @param \Pusher         $pusher
      *
      * @return void
      */
-    public function handle(Client $client, Pusher $pusher)
+    public function handle(MemeClient $client, Pusher $pusher)
     {
         $images = [];
 

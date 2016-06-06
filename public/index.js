@@ -40,7 +40,7 @@ function getImages(query) {
         channel.bind("lol", function (pusherData) {
             var imageCont = document.createElement("div");
             imageCont.id = "downloadedImageInner"
-            pusherData.message.ids.forEach(function (id) {
+            pusherData.ids.forEach(function (id) {
                 var newImage = document.createElement("img");
                 newImage.src = "result/" + id;
                 imageCont.appendChild(newImage);

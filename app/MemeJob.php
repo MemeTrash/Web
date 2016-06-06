@@ -61,9 +61,9 @@ class MemeJob
         $images = [];
 
         foreach ([random_int(1, 70), random_int(1, 70), random_int(1, 70)] as $id) {
-            $images[] = $this->client->generate($id, $this->text);
+            $images[] = $client->generate($id, $this->text);
         }
 
-        $this->pusher($this->task, self::LOL, ['ids' => $images]);
+        $pusher->trigger($this->task, self::LOL, ['ids' => $images]);
     }
 }

@@ -18,6 +18,10 @@ body {
     background-color: blue;
 }
 
+.downloadedImageOuter img{
+    width:100px;
+}
+
 #main {
     margin: 10px;
     padding-top: 50px;

@@ -57,7 +57,7 @@ class MemeClient
     {
         $name = str_random(16);
 
-        $command = "{$this->generator} \"{$this->resources}\{$image}.jpg\" \"{$this->output}\{$name}.jpg\" \"{$text}\"";
+        $command = "{$this->generator} \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$text}\"";
 
         app('Psr\Log\LoggerInterface')->info($command);
 

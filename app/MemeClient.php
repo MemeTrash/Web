@@ -59,13 +59,9 @@ class MemeClient
 
         $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-        app('Psr\Log\LoggerInterface')->info($command);
-
         $process = new Process($command);
 
         $process->run();
-
-        app('Psr\Log\LoggerInterface')->info($process->getOutput());
 
         if (!$process->isSuccessful()) {
             throw new GenerationException($process->getOutput());

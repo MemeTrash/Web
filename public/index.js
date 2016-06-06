@@ -44,7 +44,7 @@ function getImages(query) {
                 newImage.src = "result/" + id;
                 imageCont.appendChild(newImage);
             });
-            document.getElementById("downloadedImageCont").appendChild(imageCont);
+            document.getElementById("downloadedImageOuter").appendChild(imageCont);
         });
     }).fail(function (error) {
         error();

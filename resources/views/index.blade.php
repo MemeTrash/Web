@@ -35,13 +35,17 @@
             <form action="javascript: postForm()">
                 <input id="inputBox" type="text" class="input_box"/>
             </form>
-            <div id="downloadedImageCont">
-                <img src="img/burger.jpg" alt="IcanHazCheesburger"
-                width ="100" height="100" />
-                <img src="img/sparta.jpg" alt="IcanHazCheesburger"
-                width ="300" height="100" />
-                <img src="img/wars.jpg" alt="IcanHazCheesburger"
-                width ="100" height="150" />
+           <div id="downloadedImageOuter">
+                <div style="font-size: 80px;color: purple">Your Imagz:</div>
+                    <div id="downloadedImageInner">
+                        <img src="img/burger.jpg" alt="IcanHazCheesburger"
+                        width ="100" height="100" />
+                        <img src="img/sparta.jpg" alt="IcanHazCheesburger"
+                        width ="300" height="100" />
+                        <img src="img/wars.jpg" alt="IcanHazCheesburger"
+                        width ="100" height="150" />
+                    </div>
+                </div>
             </div>
         </section>
 

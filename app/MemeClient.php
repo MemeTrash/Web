@@ -55,7 +55,7 @@ class MemeClient
     {
         $name = str_random(16);
 
-        $process = new Process("{$generator} \"{$this->resources}\{$image}\" \"{$this->output}\{$name}\" \"{$text}\"");
+        $process = new Process("{$this->generator} \"{$this->resources}\{$image}\" \"{$this->output}\{$name}\" \"{$text}\"");
 
         $process->run();
 

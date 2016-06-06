@@ -13,5 +13,5 @@ use Exception;
  */
 class GenerationException extends Exception
 {
-   //
+    //
 }

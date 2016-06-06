@@ -46,7 +46,7 @@
         </section>
 
         <footer id="images">
-            <img src="img/cheezburger.jpg" alt="IcanHazCheesburger"
+            <img src="img/burger.jpg" alt="IcanHazCheesburger"
             width ="100" height="100" />
             <img src="img/sparta.jpg" alt="IcanHazCheesburger"
             width ="300" height="100" />

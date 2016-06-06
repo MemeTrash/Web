@@ -42,7 +42,7 @@ function getImages(query) {
             imageCont.id = "downloadedImageInner"
             pusherData.ids.forEach(function (id) {
                 var newImage = document.createElement("img");
-                newImage.src = "result/" + id;
+                newImage.src = "result/" + id + ".jpg";
                 imageCont.appendChild(newImage);
             });
             document.getElementById("downloadedImageOuter").style.display = "block";

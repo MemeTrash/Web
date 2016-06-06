@@ -32,8 +32,7 @@ function getImages(query) {
         data: {
             text: query
         }
-    }).done(function (httpDataStr) {
-        var httpData = JSON.parse(httpDataStr);
+    }).done(function (httpData) {
         if (httpData["error"] != undefined) {
             error();
         }

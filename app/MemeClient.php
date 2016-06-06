@@ -63,6 +63,8 @@ class MemeClient
 
         $process = new Process($command);
 
+        $process->setWorkingDirectory(dirname($this->generator));
+
         $process->run();
 
         app('Psr\Log\LoggerInterface')->info($process->getOutput());

@@ -1,10 +1,30 @@
 function error() {
     alert("YOU HAZ ERRORS");
+    debugger;
 }
 function hideLoadingScreen() {
-    document.getElementById("loadingElements").style.display = "none";
+    document.getElementById("loadingElement").style.display = "none";
 }
-hideLoadingScreen();
+$(function () { return hideLoadingScreen(); });
+var animations = [
+    "spin",
+    "zoom",
+    "bg",
+    "invert",
+    "blur",
+    "rainbow"
+];
+function displayLoadingScreen() {
+    var animationToUse = animations[Math.floor(Math.random() * animations.length)];
+    document.getElementById("loadingElement").style.display = "block";
+    document.getElementById("loadingTrollFaceScreen").style.animationName = animationToUse;
+}
+var pusher;
+$(function () {
+    pusher = new Pusher($('meta[name="pusher"]').attr('content'), {
+        cluster: "eu"
+    });
+});
 function getImages(query) {
     $.post({
         url: "/lol",
@@ -16,9 +36,6 @@ function getImages(query) {
         if (httpData["error"] != undefined) {
             error();
         }
-        var pusher = new Pusher($('meta[name="pusher"]').attr('content'), {
-            cluster: "eu"
-        });
         var channel = pusher.subscribe(httpData.data.task);
         channel.bind("lol", function (pusherData) {
             var imageCont = document.createElement("div");
@@ -27,7 +44,7 @@ function getImages(query) {
                 newImage.src = "result/" + id;
                 imageCont.appendChild(newImage);
             });
-            document.getElementById("imagePlacement").appendChild(imageCont);
+            document.getElementById("downloadedImageCont").appendChild(imageCont);
         });
     }).fail(function (error) {
         error();
@@ -35,9 +52,9 @@ function getImages(query) {
 }
 function postForm() {
     if (document.getElementById("inputBox").value != "") {
-        alert("Hi");
+        getImages(document.getElementById("inputBox").value);
     }
     else {
-        alert("Please enter a value");
+        alert("Enter a value");
     }
 }

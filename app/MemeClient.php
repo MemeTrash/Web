@@ -49,15 +49,27 @@ class MemeClient
      * @param int    $image
      * @param string $text
      *
+     * @throws \App\GenerationException
+     *
      * @return string
      */
     public function generate(int $image, string $text)
     {
         $name = str_random(16);
 
-        $process = new Process("{$this->generator} \"{$this->resources}\{$image}.jpg\" \"{$this->output}\{$name}.jpg\" \"{$text}\"");
+        $command = "{$this->generator} \"{$this->resources}\{$image}.jpg\" \"{$this->output}\{$name}.jpg\" \"{$text}\"";
+
+        app('Psr\Log\LoggerInterface')->info($command);
+
+        $process = new Process($command);
 
         $process->run();
+
+        app('Psr\Log\LoggerInterface')->info($process->getOutput());
+
+        if (!$process->isSuccessful()) {
+            throw new GenerationException($process->getOutput());
+        }
 
         return $name;
     }

@@ -100,6 +100,15 @@ p:hover {
     text-align: center;
 }
 
+.downloadedImageCont{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+form{
+    display: inline;
+}
+
 @keyframes spin {
     from {
         transform:rotate(0deg);
@@ -109,11 +118,72 @@ p:hover {
     }
 }
 
-.downloadedImageCont{
-    padding-top: 20px;
-    padding-bottom: 20px;
+@keyframes zoom {
+    from{
+        font-size:100%;
+    }
+    to{
+        font-size: 0%
+    }
 }
 
-form{
-    display: inline;
+@keyframes bg{
+    from{
+        background-color: red
+    }
+    to{
+        background-color: green;
+    }
 }
+
+@keyframes invert {
+    from{
+        -webkit-filter: invert(0%);
+    }
+    50%{
+        -webkit-filter: invert(100%);
+    }
+    to{
+        -webkit-filter: invert(0%);
+    }
+}
+
+@keyframes blur {
+    from{
+        -webkit-filter: blur(0px);
+    }
+    50%{
+        -webkit-filter: blur(20px);
+    }
+    to{
+        -webkit-filter: blur(0px);
+    }
+}
+
+@keyframes rainbow{
+    0%{
+        color: inherit;
+    }
+    10%{
+        color: purple;
+    }
+    20%{
+        color: pink;
+    }
+    30%{
+        color: red;
+    }
+    40%{
+        color: orange;
+    }
+    50%{
+        color: yellow;
+    }
+    60%{
+        color: green;
+    }
+    70%{
+        color: cyan;
+    }
+}
+

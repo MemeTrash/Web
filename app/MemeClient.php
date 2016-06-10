@@ -64,7 +64,7 @@ class MemeClient
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new GenerationException($process->getOutput());
+            throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
         }
 
         return $name;

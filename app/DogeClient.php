@@ -76,6 +76,8 @@ class DogeClient
     {
         $command = "python {$this->generator}/run.py --daemon-start \"{$this->generator}/resources\"";
 
+        app('Psr\Log\LoggerInterface')->debug($command);
+
         $this->daemon = new Process($command);
 
         $this->daemon->start();
@@ -115,6 +117,8 @@ class DogeClient
         $name = str_random(16);
 
         $command = "python {$this->generator}/run.py --with-deamon \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" 5";
+
+        app('Psr\Log\LoggerInterface')->debug($command);
 
         $process = new Process($command);
 

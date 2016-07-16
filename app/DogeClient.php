@@ -12,7 +12,7 @@ use Symfony\Component\Process\Process;
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class MemeClient
+class DogeClient
 {
     /**
      * The generator path.

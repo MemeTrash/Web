@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(DogeClient::class, function (Container $app) {
-            return new MemeClient($app->config->get('services.meme.doge'), $app->basePath('public/result'));
+            return new DogeClient($app->config->get('services.meme.doge'), $app->basePath('public/result'));
         });
 
         $this->app->get('/', function () {

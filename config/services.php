@@ -18,8 +18,8 @@ return [
     */
 
     'meme' => [
-        'gen'  => env('MEME_GEN'),
-        'doge' => env('MEME_DOGE'),
+        'gen'  => env('MEME_GEN', ''),
+        'doge' => env('MEME_DOGE', ''),
     ],
 
 ];

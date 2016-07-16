@@ -74,7 +74,7 @@ class DogeClient
      */
     protected function start()
     {
-        $command = "python {$this->generator}/run.py --start-daemon \"{$this->generator}/resources\"";
+        $command = "python {$this->generator}/run.py --daemon-start \"{$this->generator}/resources\"";
 
         $this->daemon = new Process($command);
 

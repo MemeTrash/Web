@@ -31,7 +31,7 @@ class DogeClient
     /**
      * The daemon doge generator.
      *
-     * @var \Symfony\Component\Process\Process
+     * @var \Symfony\Component\Process\Process|null
      */
     protected $daemon;
 
@@ -58,8 +58,6 @@ class DogeClient
         if ($daemon) {
             $this->daemon = $this->start();
         }
-
-        $this->daemon = new Process('READY');
     }
 
     /**

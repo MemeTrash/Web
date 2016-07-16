@@ -84,7 +84,7 @@ class DogeClient
             if (Process::OUT === $type) {
                 $this->uri = trim($data);
             } else {
-                throw new RuntimeException($this->daemon->getOutput() ?: $this->daemon->getErrorOutput());
+                throw new RuntimeException($data);
             }
 
             break; // only read off the first line

@@ -1,11 +1,14 @@
 function error() {
+    hideLoadingScreen();
     alert("YOU HAZ ERRORS");
-    debugger;
 }
+
 function hideLoadingScreen() {
     document.getElementById("loadingElement").style.display = "none";
 }
+
 $(function () { return hideLoadingScreen(); });
+
 var animations = [
     "spin",
     "zoom",
@@ -14,17 +17,20 @@ var animations = [
     "blur",
     "rainbow"
 ];
+
 function displayLoadingScreen() {
     var animationToUse = animations[Math.floor(Math.random() * animations.length)];
     document.getElementById("loadingElement").style.display = "block";
     document.getElementById("loadingTrollFaceScreen").style.animationName = animationToUse;
 }
+
 var pusher;
 $(function () {
     pusher = new Pusher($('meta[name="pusher"]').attr('content'), {
         cluster: "eu"
     });
 });
+
 function getImages(query) {
     displayLoadingScreen();
     $.post({
@@ -53,11 +59,11 @@ function getImages(query) {
         error();
     });
 }
+
 function postForm() {
     if (document.getElementById("inputBox").value != "") {
         getImages(document.getElementById("inputBox").value);
-    }
-    else {
+    } else {
         alert("Enter a value");
     }
 }

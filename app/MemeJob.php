@@ -73,7 +73,7 @@ class MemeJob implements ShouldQueue
 
         $images = [];
 
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $images[] = $client->generate($this->text);
         }
 

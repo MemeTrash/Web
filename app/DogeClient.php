@@ -8,7 +8,7 @@ use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
- * This is the meme client.
+ * This is the doge client.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
@@ -124,7 +124,7 @@ class DogeClient
         if ($this->daemon) {
             $command = "python {$this->generator}/run.py --with-deamon \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" 5";
         } else {
-            $command = "python {$this->generator}/run.py \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 5";
+            $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 5";
         }
 
         app('Psr\Log\LoggerInterface')->debug($command);

@@ -43,7 +43,7 @@ class MemeClient
      *
      * @return void
      */
-    public function __construct($generator, $resources, $output)
+    public function __construct(string $generator, string $resources, string $output)
     {
         $this->generator = $generator;
         $this->resources = $resources;

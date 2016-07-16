@@ -50,13 +50,16 @@ class DogeClient
      *
      * @return void
      */
-    public function __construct($generator, $output)
+    public function __construct(string $generator, string $output, bool $daemon = false)
     {
         $this->generator = $generator;
         $this->output = $output;
-        $this->daemon = $this->start();
 
-        app('Psr\Log\LoggerInterface')->debug('READY');
+        if ($daemon) {
+            $this->daemon = $this->start();
+        }
+
+        $this->daemon = new Process('READY');
     }
 
     /**
@@ -66,7 +69,9 @@ class DogeClient
      */
     public function __destruct()
     {
-        $this->stop();
+        if ($this->daemon) {
+            $this->stop();
+        }
     }
 
     /**
@@ -84,18 +89,12 @@ class DogeClient
 
         $this->daemon->start();
 
-        app('Psr\Log\LoggerInterface')->debug('STARTED');
-
         foreach ($this->daemon as $type => $data) {
-            app('Psr\Log\LoggerInterface')->debug('ENTERED LOOP');
-
             if (Process::OUT === $type) {
                 $this->uri = trim($data);
             } else {
                 throw new RuntimeException($data);
             }
-
-            app('Psr\Log\LoggerInterface')->debug('BREAKING');
 
             break; // only read off the first line
         }
@@ -124,7 +123,11 @@ class DogeClient
     {
         $name = str_random(16);
 
-        $command = "python {$this->generator}/run.py --with-deamon \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" 5";
+        if ($this->daemon) {
+            $command = "python {$this->generator}/run.py --with-deamon \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" 5";
+        } else {
+            $command = "python {$this->generator}/run.py \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 5";
+        }
 
         app('Psr\Log\LoggerInterface')->debug($command);
 

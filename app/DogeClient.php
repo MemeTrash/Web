@@ -55,6 +55,8 @@ class DogeClient
         $this->generator = $generator;
         $this->output = $output;
         $this->daemon = $this->start();
+
+        app('Psr\Log\LoggerInterface')->debug('READY');
     }
 
     /**
@@ -82,12 +84,18 @@ class DogeClient
 
         $this->daemon->start();
 
+        app('Psr\Log\LoggerInterface')->debug('STARTED');
+
         foreach ($this->daemon as $type => $data) {
+            app('Psr\Log\LoggerInterface')->debug('ENTERED LOOP');
+
             if (Process::OUT === $type) {
                 $this->uri = trim($data);
             } else {
                 throw new RuntimeException($data);
             }
+
+            app('Psr\Log\LoggerInterface')->debug('BREAKING');
 
             break; // only read off the first line
         }

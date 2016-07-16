@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\AppServiceProvider;
+use App\DogeClient;
 use App\MemeClient;
 use GrahamCampbell\TestBenchCore\LaravelTrait;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
@@ -21,6 +22,11 @@ class ServiceProviderTest extends AbstractTestCase
     protected function getServiceProviderClass($app)
     {
         return AppServiceProvider::class;
+    }
+
+    public function testDogeClientIsInjectable()
+    {
+        $this->assertIsInjectable(DogeClient::class);
     }
 
     public function testMemeClientIsInjectable()

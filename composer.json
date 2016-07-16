@@ -12,7 +12,7 @@
         "illuminate/redis": "~5.2.0",
         "laravel/lumen-framework": "~5.2.7",
         "graham-campbell/exceptions": "^8.6",
-        "symfony/process": "^3.0",
+        "symfony/process": "3.1.2 as 3.0.8",
         "vinkla/pusher": "^2.3",
         "vlucas/phpdotenv": "^2.2"
     },

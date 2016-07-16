@@ -34,8 +34,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(MemeClient::class, function (Container $app) {
-            return new MemeClient($app->config->get('services.meme.generator'), $app->basePath('resources/img'), $app->basePath('public/result'));
+        $this->app->singleton(MemeClient::class, function (Container $app) {
+            return new MemeClient($app->config->get('services.meme.gen'), $app->basePath('resources/img'), $app->basePath('public/result'));
+        });
+
+        $this->app->singleton(DogeClient::class, function (Container $app) {
+            return new MemeClient($app->config->get('services.meme.doge'), $app->basePath('public/result'));
         });
 
         $this->app->get('/', function () {
@@ -59,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
 
             $task = str_random(16);
 
-            dispatch(new MemeJob($task, $text));
+            dispatch(new MemeJob($task, $text, (bool) random_int(0, 1)));
 
             return new JsonResponse([
                 'success' => ['message' => 'Memes are to follow!'],

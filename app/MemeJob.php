@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Pusher;
 
@@ -36,33 +37,44 @@ class MemeJob implements ShouldQueue
     protected $text;
 
     /**
+     * Is the job doge?
+     *
+     * @var bool
+     */
+    protected $doge;
+
+    /**
      * Create a new meme job instance.
      *
      * @param string $task
      * @param string $text
+     * @param bool   $doge
      *
      * @return void
      */
-    public function __construct(string $task, string $text)
+    public function __construct(string $task, string $text, bool $doge)
     {
         $this->task = $task;
         $this->text = $text;
+        $this->doge = $doge;
     }
 
     /**
      * Handle the meme job.
      *
-     * @param \App\MemeClient $client
-     * @param \Pusher         $pusher
+     * @param \Illuminate\Contracts\Container\Container $container
      *
      * @return void
      */
-    public function handle(MemeClient $client, Pusher $pusher)
+    public function handle(Container $container)
     {
+        $pusher = $container->make(Pusher::class);
+        $client = $this->doge ? $container->make(MemeClient::class) : $container->make(DogeClient::class);
+
         $images = [];
 
-        foreach ([random_int(1, 70), random_int(1, 70), random_int(1, 70)] as $id) {
-            $images[] = $client->generate($id, $this->text);
+        for ($i = 0; $i < 3; $i++) {
+            $images[] = $client->generate($this->text);
         }
 
         $pusher->trigger($this->task, self::CHANNEL, ['ids' => $images]);

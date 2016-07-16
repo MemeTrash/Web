@@ -14,6 +14,13 @@ use Symfony\Component\Process\Process;
 class MemeClient
 {
     /**
+     * The generator path.
+     *
+     * @var string
+     */
+    protected $generator;
+
+    /**
      * The resources path.
      *
      * @var string
@@ -44,18 +51,18 @@ class MemeClient
     }
 
     /**
-     * Start a new file conversion.
+     * Generate a new image.
      *
-     * @param int    $image
      * @param string $text
      *
      * @throws \App\GenerationException
      *
      * @return string
      */
-    public function generate(int $image, string $text)
+    public function generate(string $text)
     {
         $name = str_random(16);
+        $image = random_int(1, 70);
 
         $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 

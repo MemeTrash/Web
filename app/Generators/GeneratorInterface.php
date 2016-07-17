@@ -9,7 +9,7 @@ namespace App\Generators;
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class GeneratorInterface
+interface GeneratorInterface
 {
     /**
      * Generate a new image.

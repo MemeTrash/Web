@@ -53,10 +53,10 @@ class MultiGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering multi gen wait');
+        app('Psr\Log\LoggerInterface')->debug('Entering multi gen main');
 
-        return (new Promise(function () use ($text) {
-            app('Psr\Log\LoggerInterface')->debug('Entering multi gen wait');
+        return new Promise(function () use ($text) {
+            app('Psr\Log\LoggerInterface')->debug('Entering multi gen wait 1');
 
             $promises = [];
 
@@ -64,27 +64,27 @@ class MultiGenerator implements GeneratorInterface
                 $promises[] = $this->generator->generate($text);
             }
 
-            return $promises;
-        }))->then(function (array $promises) {
-            app('Psr\Log\LoggerInterface')->debug('Entering multi gen then');
+            return new Promise(function () use ($promises) {
+                app('Psr\Log\LoggerInterface')->debug('Entering multi wait 2');
 
-            $result = [];
+                $result = [];
 
-            while ($promises) {
-                app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
-                foreach ($promises as $index => $promise) {
-                    $new = $promise->wait(false);
+                while ($promises) {
+                    app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
+                    foreach ($promises as $index => $promise) {
+                        $new = $promise->wait(false);
 
-                    if ($new instanceof PromiseInterface) {
-                        $promises[$index] = $new;
-                    } else {
-                        unset($promises[$index]);
-                        $result += $new;
+                        if ($new instanceof PromiseInterface) {
+                            $promises[$index] = $new;
+                        } else {
+                            unset($promises[$index]);
+                            $result += $new;
+                        }
                     }
                 }
-            }
 
-            return $result;
+                return $result;
+            });
         });
     }
 }

@@ -54,20 +54,22 @@ class DogeGenerator implements GeneratorInterface
     {
         app('Psr\Log\LoggerInterface')->debug('Entering cat doge main');
 
-        $name = str_random(16);
+        return new Promise(function () use ($text) {
+            app('Psr\Log\LoggerInterface')->debug('Entering doge gen wait 1');
 
-        return (new Promise(function () use ($text, $name) {
-            app('Psr\Log\LoggerInterface')->debug('Entering doge gen wait');
+            $name = str_random(16);
 
             $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
-            return (new ProcessRunner($command))->start();
-        }))->then(function (Runner $runner) use ($name) {
-            app('Psr\Log\LoggerInterface')->debug('Entering doge gen then');
+            $runner = (new ProcessRunner($command))->start();
 
-            $runner->wait();
+            return new Promise(function () use ($result, $name) {
+                app('Psr\Log\LoggerInterface')->debug('Entering doge gen wait 2');
 
-            return [$name];
+                $runner->wait();
+
+                return [$name];
+            });
         });
     }
 }

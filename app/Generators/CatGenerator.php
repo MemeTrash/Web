@@ -57,7 +57,7 @@ class CatGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string
+     * @return string[]
      */
     public function generate(string $text)
     {
@@ -68,6 +68,6 @@ class CatGenerator implements GeneratorInterface
 
         (new ProcessRunner($command))->run();
 
-        return $name;
+        return [$name];
     }
 }

@@ -48,7 +48,7 @@ class DogeGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string
+     * @return string[]
      */
     public function generate(string $text)
     {
@@ -58,6 +58,6 @@ class DogeGenerator implements GeneratorInterface
 
         (new ProcessRunner($command))->run();
 
-        return $name;
+        return [$name];
     }
 }

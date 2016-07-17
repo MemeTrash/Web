@@ -37,7 +37,7 @@ class ValidatingGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string
+     * @return string[]
      */
     public function generate(string $text)
     {

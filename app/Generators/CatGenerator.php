@@ -70,7 +70,7 @@ class CatGenerator implements GeneratorInterface
 
         $runner = (new ProcessRunner($command))->start();
 
-        return new Promise(function () use ($runner, $text) {
+        return new Promise(function () use ($runner, $name) {
             app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait');
 
             $runner->wait();

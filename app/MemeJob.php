@@ -76,7 +76,7 @@ class MemeJob implements ShouldQueue
         $inner = $container->make($this->doge ? CatGenerator::class : DogeGenerator::class);
         $generator = new ValidatingGenerator(new MultiGenerator($inner));
 
-        $images = $generator->generate($this->text);
+        $images = $generator->generate($this->text)->wait();
 
         $pusher->trigger($this->task, self::CHANNEL, ['ids' => $images]);
     }

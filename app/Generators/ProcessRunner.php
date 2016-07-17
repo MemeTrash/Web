@@ -33,29 +33,15 @@ class ProcessRunner
     }
 
     /**
-     * Run the process compeltely.
-     *
-     * @param string $text
-     *
-     * @throws \App\Generators\ExceptionInterface
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->start();
-
-        $this->wait();
-    }
-
-    /**
      * Start the process.
      *
-     * @return void
+     * @return $this
      */
     public function start()
     {
         $this->process->start();
+
+        return $this;
     }
 
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
+use GuzzleHttp\Promise\Promise;
+
 /**
  * This is the cat meme generator class.
  *
@@ -55,17 +57,22 @@ class CatGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text)
     {
         $name = str_random(16);
-        $image = random_int(1, 70);
 
-        $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
+        return new Promise(function () use ($name) {
+            $image = random_int(1, 70);
 
-        (new ProcessRunner($command))->run();
+            $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-        return [$name];
+            return (new ProcessRunner($command))->start();
+        })->then(function ($runner) use ($name) {
+            $runner->wait();
+
+            return [$name];
+        });
     }
 }

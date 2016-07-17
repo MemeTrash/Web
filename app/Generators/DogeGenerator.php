@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
+use GuzzleHttp\Promise\Promise;
+
 /**
  * This is the doge meme generator class.
  *
@@ -54,8 +56,12 @@ class DogeGenerator implements GeneratorInterface
 
         $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
-        (new ProcessRunner($command))->run();
+        $runner = (new ProcessRunner($command))->start();
 
-        return [$name];
+        return new Promise(function () use ($name, $runner) {
+            $runner->wait();
+
+            return [$name];
+        });
     }
 }

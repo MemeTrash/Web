@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
+use GuzzleHttp\Promise\Promise;
+
 /**
  * This is the validating generator class.
  *
@@ -37,22 +39,24 @@ class ValidatingGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text)
     {
-        if (!$text) {
-            throw new ValidationException('No meme text provided!');
-        }
+        return (new Promise(function () use ($text) {
+            if (!$text) {
+                throw new ValidationException('No meme text provided!');
+            }
 
-        if (preg_match('/^[a-z0-9 .\-]+$/i', $text) !== 1) {
-            throw new ValidationException('Invalid meme text provided!');
-        }
+            if (preg_match('/^[a-z0-9 .\-]+$/i', $text) !== 1) {
+                throw new ValidationException('Invalid meme text provided!');
+            }
 
-        if (strlen($text) > 128) {
-            throw new ValidationException('Meme text too long!');
-        }
-
-        return $this->generator->generate($text);
+            if (strlen($text) > 128) {
+                throw new ValidationException('Meme text too long!');
+            }
+        }))->then(function () use ($text) {
+            return $this->generator->generate($text);
+        });
     }
 }

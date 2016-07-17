@@ -18,7 +18,7 @@ interface GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text);
 }

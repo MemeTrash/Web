@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
+
 /**
  * This is the multi generator class.
  *
@@ -46,16 +49,35 @@ class MultiGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text)
     {
-        $result = [];
+        return (new Promise(function () use ($text) {
+            $promises = [];
 
-        for ($i = 0; $i < $this->times; $i++) {
-            $result += $generator->generate($text);
-        }
+            for ($i = 0; $i < $this->times; $i++) {
+                $promises[] = $this->generator->generate($text);
+            }
 
-        return $result;
+            return $promises;
+        }))->then(function (array $promises) {
+            $result = [];
+
+            while ($promises) {
+                foreach ($promises as $index => $promise) {
+                    $new = $promise->wait(false);
+
+                    if ($new instanceof PromiseInterface) {
+                        $promises[$index] = $new;
+                    } else {
+                        unset($promises[$index]);
+                        $result += $new;
+                    }
+                }
+            }
+
+            return $result;
+        });
     }
 }

@@ -65,7 +65,7 @@ class MultiGenerator implements GeneratorInterface
 
             foreach ($results as $result) {
                 app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
-                $images += $result->wait();
+                $images = array_merge($images, $result->wait());
             }
 
             return $images;

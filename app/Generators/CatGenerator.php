@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
-use GuzzleHttp\Promise\Promise;
-
 /**
  * This is the cat meme generator class.
  *
@@ -13,6 +11,13 @@ use GuzzleHttp\Promise\Promise;
  */
 class CatGenerator implements GeneratorInterface
 {
+    /**
+     * The runner instance.
+     *
+     * @var \App\Generator\ProcessRunner
+     */
+    protected $runner;
+
     /**
      * The generator path.
      *
@@ -37,29 +42,31 @@ class CatGenerator implements GeneratorInterface
     /**
      * Create a new cat meme generator instance.
      *
-     * @param string $generator
-     * @param string $resources
-     * @param string $output
+     * @param \App\Generator\ProcessRunner $runner
+     * @param string                       $generator
+     * @param string                       $resources
+     * @param string                       $output
      *
      * @return void
      */
-    public function __construct(string $generator, string $resources, string $output)
+    public function __construct(ProcessRunner $runner, string $generator, string $resources, string $output)
     {
+        $this->runner = $runner;
         $this->generator = $generator;
         $this->resources = $resources;
         $this->output = $output;
     }
 
     /**
-     * Generate a new image.
+     * Start the meme generation.
      *
      * @param string $text
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return \App\Generators\Promise
      */
-    public function generate(string $text)
+    public function start(string $text)
     {
         app('Psr\Log\LoggerInterface')->debug('Entering cat gen main');
 
@@ -68,14 +75,12 @@ class CatGenerator implements GeneratorInterface
 
         $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-        $runner = (new ProcessRunner($command))->start();
+        $process = $this->runner->start($command);
 
-        return new Promise(function () use ($runner, $name) {
+        return new Promise(function () use ($process, $name) {
             app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait');
 
-            $runner->wait();
-
-            app('Psr\Log\LoggerInterface')->debug($name);
+            $process->wait();
 
             return [$name];
         });

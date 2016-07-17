@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
-use GuzzleHttp\Promise\Promise;
-
 /**
  * This is the validating generator class.
  *
@@ -33,15 +31,15 @@ class ValidatingGenerator implements GeneratorInterface
     }
 
     /**
-     * Generate a new image.
+     * Start the meme generation.
      *
      * @param string $text
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return \App\Generators\Promise
      */
-    public function generate(string $text)
+    public function start(string $text)
     {
         app('Psr\Log\LoggerInterface')->debug('Entering val gen main');
 
@@ -60,7 +58,7 @@ class ValidatingGenerator implements GeneratorInterface
                 throw new ValidationException('Meme text too long!');
             }
 
-            return $this->generator->generate($text)->wait();
+            return $this->generator->start($text)->wait();
         });
     }
 }

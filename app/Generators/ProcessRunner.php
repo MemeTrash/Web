@@ -14,49 +14,22 @@ use Symfony\Component\Process\Process;
 class ProcessRunner
 {
     /**
-     * The symfony process instance.
-     *
-     * @var \Symfony\Component\Process\Process
-     */
-    protected $process;
-
-    /**
-     * Create a new process runner instance.
-     *
-     * @param Symfony\Component\Process\Process $process
-     *
-     * @return void
-     */
-    public function __construct(string $command)
-    {
-        $this->process = new Process($command);
-    }
-
-    /**
      * Start the process.
      *
-     * @return $this
+     * @return App\Generators\Promise
      */
-    public function start()
+    public function start(string $command)
     {
-        $this->process->start();
+        $process = new Process($command);
 
-        return $this;
-    }
+        $process->start();
 
-    /**
-     * Wait for completion.
-     *
-     * @throws \App\Generators\ExceptionInterface
-     *
-     * @return void
-     */
-    public function wait()
-    {
-        $this->process->wait();
+        return new Promise(function () use  ($process) {
+            $process->wait();
 
-        if (!$this->process->isSuccessful()) {
-            throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
-        }
+            if (!$this->process->isSuccessful()) {
+                throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
+            }
+        })
     }
 }

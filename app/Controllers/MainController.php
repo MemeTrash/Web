@@ -48,7 +48,7 @@ class MainController extends Controller
 
         $generator = new ValidatingGenerator(new MultiGenerator($inner));
 
-        $images = $generator->generate((string) $request->get('text'))->wait();
+        $images = $generator->start((string) $request->get('text'))->wait();
 
         return new JsonResponse([
             'success' => ['message' => 'Here are your memes!'],

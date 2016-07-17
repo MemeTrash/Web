@@ -12,13 +12,13 @@ namespace App\Generators;
 interface GeneratorInterface
 {
     /**
-     * Generate a new image.
+     * Start the meme generation.
      *
      * @param string $text
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return \App\Generators\Promise
      */
-    public function generate(string $text);
+    public function start(string $text);
 }

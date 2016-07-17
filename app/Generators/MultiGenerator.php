@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
-use GuzzleHttp\Promise\Promise;
-
 /**
  * This is the multi generator class.
  *
@@ -42,35 +40,35 @@ class MultiGenerator implements GeneratorInterface
     }
 
     /**
-     * Generate a new image.
+     * Start the meme generation.
      *
      * @param string $text
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return \App\Generators\Promise
      */
-    public function generate(string $text)
+    public function start(string $text)
     {
         app('Psr\Log\LoggerInterface')->debug('Entering multi gen main');
 
         return new Promise(function () use ($text) {
             app('Psr\Log\LoggerInterface')->debug('Entering multi gen wait');
 
-            $promises = [];
+            $results = [];
 
             for ($i = 0; $i < $this->times; $i++) {
-                $promises[] = $this->generator->generate($text);
+                $results[] = $this->generator->start($text);
             }
 
-            $result = [];
+            $images = [];
 
-            foreach ($promises as $promise) {
+            foreach ($results as $result) {
                 app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
-                $result += $promise->wait();
+                $images += $result->wait();
             }
 
-            return $result;
+            return $images;
         });
     }
 }

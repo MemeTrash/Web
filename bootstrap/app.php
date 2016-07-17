@@ -20,7 +20,6 @@ $app->singleton(Illuminate\Contracts\Console\Kernel::class, Laravel\Lumen\Consol
 
 $app->register(GrahamCampbell\Exceptions\ExceptionsServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
-$app->register(Vinkla\Pusher\PusherServiceProvider::class);
 
 $app->register(App\AppServiceProvider::class);
 

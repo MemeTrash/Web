@@ -7,7 +7,9 @@ function hideLoadingScreen() {
     document.getElementById("loadingElement").style.display = "none";
 }
 
-$(function () { return hideLoadingScreen(); });
+$(function () {
+    return hideLoadingScreen();
+});
 
 var animations = [
     "spin",
@@ -24,13 +26,6 @@ function displayLoadingScreen() {
     document.getElementById("loadingTrollFaceScreen").style.animationName = animationToUse;
 }
 
-var pusher;
-$(function () {
-    pusher = new Pusher($('meta[name="pusher"]').attr('content'), {
-        cluster: "eu"
-    });
-});
-
 function getImages(query) {
     displayLoadingScreen();
     $.post({
@@ -39,22 +34,18 @@ function getImages(query) {
             text: query
         }
     }).done(function (httpData) {
-        if (httpData["error"] != undefined) {
-            error();
-        }
-        var channel = pusher.subscribe(httpData.data.task);
-        channel.bind("lol", function (pusherData) {
-            var imageCont = document.createElement("div");
-            imageCont.id = "downloadedImageInner"
-            pusherData.ids.forEach(function (id) {
-                var newImage = document.createElement("img");
-                newImage.src = "result/" + id + ".jpg";
-                imageCont.appendChild(newImage);
-            });
-            document.getElementById("downloadedImageOuter").style.display = "block";
-            document.getElementById("downloadedImageOuter").replaceChild(imageCont, document.getElementById("downloadedImageInner"))
-            hideLoadingScreen();
+        var imageCont = document.createElement("div");
+        imageCont.id = "downloadedImageInner"
+
+        httpData["data"]["images"].forEach(function (id) {
+            var newImage = document.createElement("img");
+            newImage.src = "result/" + id + ".jpg";
+            imageCont.appendChild(newImage);
         });
+
+        document.getElementById("downloadedImageOuter").style.display = "block";
+        document.getElementById("downloadedImageOuter").replaceChild(imageCont, document.getElementById("downloadedImageInner"))
+        hideLoadingScreen();
     }).fail(function (error) {
         error();
     });

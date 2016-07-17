@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\MemeJob;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,17 +33,22 @@ class MainController extends Controller
     /**
      * Generate the memes.
      *
-     * @param \Illuminate\Http\Request
+     * @param \Illuminate\Contracts\Container\Container $container
+     * @param \Illuminate\Http\Request                  $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function generate(Request $request)
+    public function generate(Container $container, Request $request)
     {
-        dispatch(new MemeJob(str_random(16), (string) $request->get('text'), (bool) random_int(0, 1)));
+        $inner = $container->make(random_int(0, 1) ? CatGenerator::class : DogeGenerator::class);
+
+        $generator = new ValidatingGenerator(new MultiGenerator($inner));
+
+        $images = $generator->generate((string) $request->get('text'))->wait();
 
         return new JsonResponse([
-            'success' => ['message' => 'Memes are to follow!'],
-            'data'    => ['task' => $task],
-        ], 202);
+            'success' => ['message' => 'Here are your memes!'],
+            'data'    => ['images' => $images],
+        ]);
     }
 }

@@ -7,8 +7,8 @@ namespace App\Controllers;
 use App\MemeJob;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
 
 /**

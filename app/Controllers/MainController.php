@@ -28,7 +28,7 @@ class MainController extends Controller
     public function show(Factory $view)
     {
         return new Response($view->make('index'));
-    };
+    }
 
     /**
      * Generate the memes.

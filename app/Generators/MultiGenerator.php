@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Generators;
 
 use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * This is the multi generator class.

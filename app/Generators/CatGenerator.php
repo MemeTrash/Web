@@ -63,13 +63,13 @@ class CatGenerator implements GeneratorInterface
     {
         $name = str_random(16);
 
-        return new Promise(function () use ($name) {
+        return (new Promise(function () use ($name) {
             $image = random_int(1, 70);
 
             $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
             return (new ProcessRunner($command))->start();
-        })->then(function ($runner) use ($name) {
+        }))->then(function (Runner $runner) use ($name) {
             $runner->wait();
 
             return [$name];

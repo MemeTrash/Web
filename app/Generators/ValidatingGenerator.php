@@ -43,7 +43,7 @@ class ValidatingGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        return new Promise(function () use ($text) {
+        return (new Promise(function () use ($text) {
             if (!$text) {
                 throw new ValidationException('No meme text provided!');
             }
@@ -55,7 +55,7 @@ class ValidatingGenerator implements GeneratorInterface
             if (strlen($text) > 128) {
                 throw new ValidationException('Meme text too long!');
             }
-        })->then(function () use ($text) {
+        }))->then(function () use ($text) {
             return $this->generator->generate($text);
         });
     }

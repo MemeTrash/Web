@@ -49,11 +49,11 @@ class MultiGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text)
     {
-        return new Promise(function () use ($text) {
+        return (new Promise(function () use ($text) {
             $promises = [];
 
             for ($i = 0; $i < $this->times; $i++) {
@@ -61,7 +61,7 @@ class MultiGenerator implements GeneratorInterface
             }
 
             return $promises;
-        })->then(function (array $promises) {
+        }))->then(function (array $promises) {
             $result = [];
 
             while ($promises) {

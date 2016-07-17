@@ -48,17 +48,17 @@ class DogeGenerator implements GeneratorInterface
      *
      * @throws \App\Generators\ExceptionInterface
      *
-     * @return string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function generate(string $text)
     {
         $name = str_random(16);
 
-        $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
+        return (new Promise(function () use ($name) {
+            $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
-        $runner = (new ProcessRunner($command))->start();
-
-        return new Promise(function () use ($name, $runner) {
+            return (new ProcessRunner($command))->start();
+        }))->then(function (Runner $runner) use ($name) {
             $runner->wait();
 
             return [$name];

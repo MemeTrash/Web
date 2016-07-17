@@ -52,13 +52,19 @@ class DogeGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
+        \Log::debug('Entering cat doge main');
+
         $name = str_random(16);
 
         return (new Promise(function () use ($text, $name) {
+            \Log::debug('Entering doge gen wait');
+
             $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
             return (new ProcessRunner($command))->start();
         }))->then(function (Runner $runner) use ($name) {
+            \Log::debug('Entering doge gen then');
+
             $runner->wait();
 
             return [$name];

@@ -61,15 +61,21 @@ class CatGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
+        \Log::debug('Entering cat gen main');
+
         $name = str_random(16);
 
         return (new Promise(function () use ($text, $name) {
+            \Log::debug('Entering cat gen wait');
+
             $image = random_int(1, 70);
 
             $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
             return (new ProcessRunner($command))->start();
         }))->then(function (Runner $runner) use ($name) {
+            \Log::debug('Entering cat gen then');
+
             $runner->wait();
 
             return [$name];

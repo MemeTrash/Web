@@ -43,7 +43,11 @@ class ValidatingGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
+        \Log::debug('Entering val gen main');
+
         return (new Promise(function () use ($text) {
+            \Log::debug('Entering val gen wait');
+
             if (!$text) {
                 throw new ValidationException('No meme text provided!');
             }
@@ -56,6 +60,8 @@ class ValidatingGenerator implements GeneratorInterface
                 throw new ValidationException('Meme text too long!');
             }
         }))->then(function () use ($text) {
+            \Log::debug('Entering val gen then');
+
             return $this->generator->generate($text);
         });
     }

@@ -29,20 +29,6 @@ class DogeGenerator implements GeneratorInterface
     protected $output;
 
     /**
-     * The daemon doge generator.
-     *
-     * @var \Symfony\Component\Process\Process|null
-     */
-    protected $daemon;
-
-    /**
-     * The daemon uri.
-     *
-     * @var string|null
-     */
-    protected $uri;
-
-    /**
      * Create a new doge meme generator instance.
      *
      * @param string $generator
@@ -50,62 +36,10 @@ class DogeGenerator implements GeneratorInterface
      *
      * @return void
      */
-    public function __construct(string $generator, string $output, bool $daemon = false)
+    public function __construct(string $generator, string $output)
     {
         $this->generator = $generator;
         $this->output = $output;
-
-        if ($daemon) {
-            $this->daemon = $this->start();
-        }
-    }
-
-    /**
-     * Destroy the current doge meme generator instance.
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        if ($this->daemon) {
-            $this->stop();
-        }
-    }
-
-    /**
-     * Start the daemon generator.
-     *
-     * @return void
-     */
-    protected function start()
-    {
-        $command = "python {$this->generator}/run.py --daemon-start \"{$this->generator}/resources\"";
-
-        app('Psr\Log\LoggerInterface')->debug($command);
-
-        $this->daemon = new Process($command);
-
-        $this->daemon->start();
-
-        foreach ($this->daemon as $type => $data) {
-            if (Process::OUT === $type) {
-                $this->uri = trim($data);
-            } else {
-                throw new RuntimeException($data);
-            }
-
-            break; // only read off the first line
-        }
-    }
-
-    /**
-     * Stop the daemon generator.
-     *
-     * @return void
-     */
-    protected function stop()
-    {
-        $this->daemon->stop();
     }
 
     /**
@@ -121,13 +55,7 @@ class DogeGenerator implements GeneratorInterface
     {
         $name = str_random(16);
 
-        if ($this->daemon) {
-            $command = "python {$this->generator}/run.py --with-deamon \"{$this->uri}\" \"{$text}\" \"{$this->output}/{$name}.jpg\" 6";
-        } else {
-            $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
-        }
-
-        app('Psr\Log\LoggerInterface')->debug($command);
+        $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
         $process = new Process($command);
 

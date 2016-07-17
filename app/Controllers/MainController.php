@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Generators\CatGenerator;
+use App\Generators\DogeGenerator;
+use App\Generators\MultiGenerator;
+use App\Generators\ValidatingGenerator;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;

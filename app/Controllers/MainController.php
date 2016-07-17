@@ -46,7 +46,7 @@ class MainController extends Controller
     {
         $doge = (bool) random_int(0, 1);
 
-        $inner = $container->make($doge ? CatGenerator::class : DogeGenerator::class);
+        $inner = $container->make($doge ? DogeGenerator::class : CatGenerator::class);
 
         $generator = new ValidatingGenerator(new MultiGenerator($inner, $doge ? 2 : 3));
 

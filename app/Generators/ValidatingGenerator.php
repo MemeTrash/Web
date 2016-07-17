@@ -43,7 +43,7 @@ class ValidatingGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        return (new Promise(function () use ($text) {
+        return new Promise(function () use ($text) {
             if (!$text) {
                 throw new ValidationException('No meme text provided!');
             }
@@ -57,6 +57,6 @@ class ValidatingGenerator implements GeneratorInterface
             }
 
             return $this->generator->generate($text);
-        }));
+        });
     }
 }

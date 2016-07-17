@@ -37,7 +37,7 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generate(Request $request) {
+    public function generate(Request $request)
     {
         dispatch(new MemeJob(str_random(16), (string) $request->get('text'), (bool) random_int(0, 1)));
 

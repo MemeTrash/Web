@@ -65,8 +65,6 @@ class MultiGenerator implements GeneratorInterface
 
             $result = [];
 
-            app('Psr\Log\LoggerInterface')->debug(count($promises));
-
             foreach ($promises as $promise) {
                 app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
                 $result += $promise->wait();

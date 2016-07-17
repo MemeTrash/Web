@@ -75,6 +75,8 @@ class CatGenerator implements GeneratorInterface
 
             $runner->wait();
 
+            app('Psr\Log\LoggerInterface')->debug($name);
+
             return [$name];
         });
     }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Generations;
 
-use Symfony\Component\Process\Process;
-
 /**
  * This is the validating generator class.
  *

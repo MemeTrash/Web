@@ -27,7 +27,7 @@ class ProcessRunner
         return new Promise(function () use ($process) {
             $process->wait();
 
-            if (!$this->process->isSuccessful()) {
+            if (!$process->isSuccessful()) {
                 throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
             }
         });

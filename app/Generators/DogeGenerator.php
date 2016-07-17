@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Generators;
 
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
- * This is the doge client.
+ * This is the doge meme generator class.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class DogeClient
+class DogeGenerator implements GeneratorInterface
 {
     /**
      * The generator path.
@@ -43,7 +43,7 @@ class DogeClient
     protected $uri;
 
     /**
-     * Create a new client instance.
+     * Create a new doge meme generator instance.
      *
      * @param string $generator
      * @param string $output
@@ -61,7 +61,7 @@ class DogeClient
     }
 
     /**
-     * Destroy the current client instance.
+     * Destroy the current doge meme generator instance.
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class DogeClient
      *
      * @param string $text
      *
-     * @throws \App\GenerationException
+     * @throws \App\Generators\ExceptionInterface
      *
      * @return string
      */

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\AppServiceProvider;
-use App\DogeClient;
-use App\MemeClient;
+use App\Generators\CatGenerator;
+use App\Generators\DogeGenerator;
 use GrahamCampbell\TestBenchCore\LaravelTrait;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 
@@ -24,13 +24,13 @@ class ServiceProviderTest extends AbstractTestCase
         return AppServiceProvider::class;
     }
 
-    public function testDogeClientIsInjectable()
+    public function testCatGeneratorIsInjectable()
     {
-        $this->assertIsInjectable(DogeClient::class);
+        $this->assertIsInjectable(CatGenerator::class);
     }
 
-    public function testMemeClientIsInjectable()
+    public function testDogeGeneratorIsInjectable()
     {
-        $this->assertIsInjectable(MemeClient::class);
+        $this->assertIsInjectable(DogeGenerator::class);
     }
 }

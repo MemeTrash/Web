@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Generations;
 
 use Symfony\Component\Process\Process;
 
 /**
- * This is the meme client.
+ * This is the cat meme generator class.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class MemeClient
+class CatGenerator implements GeneratorInterface
 {
     /**
      * The generator path.
@@ -35,7 +35,7 @@ class MemeClient
     protected $output;
 
     /**
-     * Create a new client instance.
+     * Create a new cat meme generator instance.
      *
      * @param string $generator
      * @param string $resources
@@ -55,7 +55,7 @@ class MemeClient
      *
      * @param string $text
      *
-     * @throws \App\GenerationException
+     * @throws \App\Generators\ExceptionInterface
      *
      * @return string
      */

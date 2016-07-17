@@ -29,6 +29,7 @@ class ServiceProviderTest extends AbstractTestCase
     {
         $this->assertIsInjectable(ProcessRunner::class);
     }
+
     public function testCatGeneratorIsInjectable()
     {
         $this->assertIsInjectable(CatGenerator::class);

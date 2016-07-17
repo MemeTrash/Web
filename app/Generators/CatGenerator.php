@@ -61,12 +61,12 @@ class CatGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        \Log::debug('Entering cat gen main');
+        \Illuminate\Support\Facades\Log::debug('Entering cat gen main');
 
         $name = str_random(16);
 
         return (new Promise(function () use ($text, $name) {
-            \Log::debug('Entering cat gen wait');
+            \Illuminate\Support\Facades\Log::debug('Entering cat gen wait');
 
             $image = random_int(1, 70);
 
@@ -74,7 +74,7 @@ class CatGenerator implements GeneratorInterface
 
             return (new ProcessRunner($command))->start();
         }))->then(function (Runner $runner) use ($name) {
-            \Log::debug('Entering cat gen then');
+            \Illuminate\Support\Facades\Log::debug('Entering cat gen then');
 
             $runner->wait();
 

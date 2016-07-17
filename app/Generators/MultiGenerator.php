@@ -53,10 +53,10 @@ class MultiGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        \Log::debug('Entering multi gen wait');
+        \Illuminate\Support\Facades\Log::debug('Entering multi gen wait');
 
         return (new Promise(function () use ($text) {
-            \Log::debug('Entering multi gen wait');
+            \Illuminate\Support\Facades\Log::debug('Entering multi gen wait');
 
             $promises = [];
 
@@ -66,12 +66,12 @@ class MultiGenerator implements GeneratorInterface
 
             return $promises;
         }))->then(function (array $promises) {
-            \Log::debug('Entering multi gen then');
+            \Illuminate\Support\Facades\Log::debug('Entering multi gen then');
 
             $result = [];
 
             while ($promises) {
-                \Log::debug('Entering multi gen loop');
+                \Illuminate\Support\Facades\Log::debug('Entering multi gen loop');
                 foreach ($promises as $index => $promise) {
                     $new = $promise->wait(false);
 

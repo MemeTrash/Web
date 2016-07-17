@@ -63,23 +63,19 @@ class CatGenerator implements GeneratorInterface
     {
         app('Psr\Log\LoggerInterface')->debug('Entering cat gen main');
 
-        return new Promise(function () use ($text) {
-            app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait 1');
+        $name = str_random(16);
+        $image = random_int(1, 70);
 
-            $name = str_random(16);
-            $image = random_int(1, 70);
+        $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-            $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
+        $runner = (new ProcessRunner($command))->start();
 
-            $runner (new ProcessRunner($command))->start();
+        return new Promise(function () use ($runner, $text) {
+            app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait');
 
-            return new Promise(function ($runner, $name) {
-                app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait 2');
+            $runner->wait();
 
-                $runner->wait();
-
-                return [$name];
-            });
+            return [$name];
         });
     }
 }

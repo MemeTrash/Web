@@ -46,7 +46,7 @@ class ValidatingGenerator implements GeneratorInterface
         app('Psr\Log\LoggerInterface')->debug('Entering val gen main');
 
         return new Promise(function () use ($text) {
-            app('Psr\Log\LoggerInterface')->debug('Entering val gen wait 1');
+            app('Psr\Log\LoggerInterface')->debug('Entering val gen wait');
 
             if (!$text) {
                 throw new ValidationException('No meme text provided!');
@@ -60,11 +60,7 @@ class ValidatingGenerator implements GeneratorInterface
                 throw new ValidationException('Meme text too long!');
             }
 
-            return new Promise(function () use ($text) {
-                app('Psr\Log\LoggerInterface')->debug('Entering val gen wait 2');
-
-                return $this->generator->generate($text);
-            });
+            return $this->generator->generate($text)->wait();
         });
     }
 }

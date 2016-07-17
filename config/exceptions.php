@@ -19,7 +19,7 @@ return [
     */
 
     'transformers' => [
-        //
+        'App\Transformers\ValidationTransformer',
     ],
 
     /*

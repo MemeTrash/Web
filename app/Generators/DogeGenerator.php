@@ -52,7 +52,7 @@ class DogeGenerator implements GeneratorInterface
      */
     public function generate(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering cat doge main');
+        app('Psr\Log\LoggerInterface')->debug('Entering doge gen main');
 
         $name = str_random(16);
 

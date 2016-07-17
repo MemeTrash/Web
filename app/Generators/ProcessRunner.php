@@ -55,7 +55,7 @@ class ProcessRunner
     {
         $this->process->wait();
 
-        if (!$process->isSuccessful()) {
+        if (!$this->process->isSuccessful()) {
             throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
         }
     }

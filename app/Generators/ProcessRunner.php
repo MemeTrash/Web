@@ -24,7 +24,7 @@ class ProcessRunner
 
         $process->start();
 
-        return new Promise(function () use  ($process) {
+        return new Promise(function () use ($process) {
             $process->wait();
 
             if (!$this->process->isSuccessful()) {

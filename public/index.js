@@ -1,8 +1,3 @@
-function error() {
-    hideLoadingScreen();
-    alert("YOU HAZ ERRORS");
-}
-
 function hideLoadingScreen() {
     document.getElementById("loadingElement").style.display = "none";
 }
@@ -47,7 +42,8 @@ function getImages(query) {
         document.getElementById("downloadedImageOuter").replaceChild(imageCont, document.getElementById("downloadedImageInner"))
         hideLoadingScreen();
     }).fail(function (error) {
-        error();
+        hideLoadingScreen();
+        alert("YOU HAZ ERRORS");
     });
 }
 

@@ -55,8 +55,8 @@ class ValidatingGenerator implements GeneratorInterface
             if (strlen($text) > 128) {
                 throw new ValidationException('Meme text too long!');
             }
-        }))->then(function () use ($text) {
+
             return $this->generator->generate($text);
-        });
+        }));
     }
 }

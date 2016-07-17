@@ -26,7 +26,7 @@ class ValidationTransformer implements TransformerInterface
     public function transform(Exception $exception)
     {
         if ($exception instanceof ValidationException) {
-            $exception = new BadRequestHttpException($e->getMessage());
+            $exception = new BadRequestHttpException($exception->getMessage());
         }
 
         return $exception;

@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->get('/', 'App\Controllers\MainController@index');
+        $this->app->get('/', 'App\Controllers\MainController@show');
 
         $this->app->post('lol', 'App\Controllers\MainController@generate');
     }

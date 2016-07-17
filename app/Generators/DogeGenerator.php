@@ -56,13 +56,7 @@ class DogeGenerator implements GeneratorInterface
 
         $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
-        $process = new Process($command);
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
-        }
+        (new ProcessRunner($command))->run();
 
         return $name;
     }

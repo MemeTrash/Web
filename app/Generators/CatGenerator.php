@@ -66,13 +66,7 @@ class CatGenerator implements GeneratorInterface
 
         $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-        $process = new Process($command);
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
-        }
+        (new ProcessRunner($command))->run();
 
         return $name;
     }

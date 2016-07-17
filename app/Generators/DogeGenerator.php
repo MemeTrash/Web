@@ -54,7 +54,7 @@ class DogeGenerator implements GeneratorInterface
     {
         $name = str_random(16);
 
-        return (new Promise(function () use ($name) {
+        return (new Promise(function () use ($text, $name) {
             $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
 
             return (new ProcessRunner($command))->start();

@@ -50,11 +50,7 @@ class MultiGenerator implements GeneratorInterface
      */
     public function start(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering multi gen main');
-
         return new Promise(function () use ($text) {
-            app('Psr\Log\LoggerInterface')->debug('Entering multi gen wait');
-
             $results = [];
 
             for ($i = 0; $i < $this->times; $i++) {
@@ -64,7 +60,6 @@ class MultiGenerator implements GeneratorInterface
             $images = [];
 
             foreach ($results as $result) {
-                app('Psr\Log\LoggerInterface')->debug('Entering multi gen loop');
                 $images = array_merge($images, $result->wait());
             }
 

@@ -41,11 +41,7 @@ class ValidatingGenerator implements GeneratorInterface
      */
     public function start(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering val gen main');
-
         return new Promise(function () use ($text) {
-            app('Psr\Log\LoggerInterface')->debug('Entering val gen wait');
-
             if (!$text) {
                 throw new ValidationException('No meme text provided!');
             }

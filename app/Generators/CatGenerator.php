@@ -68,8 +68,6 @@ class CatGenerator implements GeneratorInterface
      */
     public function start(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering cat gen main');
-
         $name = str_random(16);
         $image = random_int(1, 70);
 
@@ -78,8 +76,6 @@ class CatGenerator implements GeneratorInterface
         $process = $this->runner->start($command);
 
         return new Promise(function () use ($process, $name) {
-            app('Psr\Log\LoggerInterface')->debug('Entering cat gen wait');
-
             $process->wait();
 
             return [$name];

@@ -59,8 +59,6 @@ class DogeGenerator implements GeneratorInterface
      */
     public function start(string $text)
     {
-        app('Psr\Log\LoggerInterface')->debug('Entering doge gen main');
-
         $name = str_random(16);
 
         $command = "python {$this->generator}/run.py \"{$text}\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" 6";
@@ -68,8 +66,6 @@ class DogeGenerator implements GeneratorInterface
         $process = $this->runner->start($command);
 
         return new Promise(function () use ($process, $name) {
-            app('Psr\Log\LoggerInterface')->debug('Entering doge gen wait');
-
             $process->wait();
 
             return [$name];

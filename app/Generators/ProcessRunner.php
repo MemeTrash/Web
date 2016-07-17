@@ -30,6 +30,6 @@ class ProcessRunner
             if (!$this->process->isSuccessful()) {
                 throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
             }
-        })
+        });
     }
 }

@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App;
-
-use Symfony\Component\Process\Process;
+namespace App\Generators;
 
 /**
- * This is the meme client.
+ * This is the cat meme generator class.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class MemeClient
+class CatGenerator implements GeneratorInterface
 {
     /**
      * The generator path.
@@ -35,7 +33,7 @@ class MemeClient
     protected $output;
 
     /**
-     * Create a new client instance.
+     * Create a new cat meme generator instance.
      *
      * @param string $generator
      * @param string $resources
@@ -55,9 +53,9 @@ class MemeClient
      *
      * @param string $text
      *
-     * @throws \App\GenerationException
+     * @throws \App\Generators\ExceptionInterface
      *
-     * @return string
+     * @return string[]
      */
     public function generate(string $text)
     {
@@ -66,14 +64,8 @@ class MemeClient
 
         $command = "python {$this->generator}/run.py \"{$this->resources}/{$image}.jpg\" \"{$this->output}/{$name}.jpg\" \"{$this->generator}/resources\" \"{$text}\"";
 
-        $process = new Process($command);
+        (new ProcessRunner($command))->run();
 
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new GenerationException($process->getOutput() ?: $process->getErrorOutput());
-        }
-
-        return $name;
+        return [$name];
     }
 }

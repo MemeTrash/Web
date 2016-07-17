@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Generators\CatGenerator;
+use App\Generators\DogeGenerator;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * This is the app service provider.
@@ -18,57 +17,29 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Boot the service provider.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton(MemeClient::class, function (Container $app) {
-            return new MemeClient($app->config->get('services.meme.gen'), $app->basePath('resources/img'), $app->basePath('public/result'));
+        $this->app->singleton(CatGenerator::class, function (Container $app) {
+            return new CatGenerator(
+                $app->config->get('services.meme.cat'),
+                $app->basePath('resources/img'),
+                $app->basePath('public/result')
+            );
         });
 
-        $this->app->singleton(DogeClient::class, function (Container $app) {
-            return new DogeClient($app->config->get('services.meme.doge'), $app->basePath('public/result'));
+        $this->app->singleton(DogeGenerator::class, function (Container $app) {
+            return new DogeGenerator(
+                $app->config->get('services.meme.doge'),
+                $app->basePath('public/result')
+            );
         });
 
-        $this->app->get('/', function () {
-            return view('index');
-        });
+        $this->app->get('/', 'App\Controllers\MainController@show');
 
-        $this->app->post('lol', function (Request $request) {
-            $text = $request->get('text');
-
-            if (!$text) {
-                throw new BadRequestHttpException('No meme text provided!');
-            }
-
-            if (preg_match('/^[a-z0-9 .\-]+$/i', $text) !== 1) {
-                throw new BadRequestHttpException('Invalid meme text provided!');
-            }
-
-            if (strlen($text) > 128) {
-                throw new BadRequestHttpException('Meme text too long!');
-            }
-
-            $task = str_random(16);
-
-            dispatch(new MemeJob($task, $text, (bool) random_int(0, 1)));
-
-            return new JsonResponse([
-                'success' => ['message' => 'Memes are to follow!'],
-                'data'    => ['task' => $task],
-            ], 202);
-        });
+        $this->app->post('lol', 'App\Controllers\MainController@generate');
     }
 }

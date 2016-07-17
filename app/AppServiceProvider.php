@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CatGenerator::class, function (Container $app) {
             return new CatGenerator(
-                $app->config->get('services.meme.cat'), 
+                $app->config->get('services.meme.cat'),
                 $app->basePath('resources/img'),
                 $app->basePath('public/result')
             );

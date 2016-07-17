@@ -77,7 +77,7 @@ class MemeJob implements ShouldQueue
         $images = [];
 
         for ($i = 0; $i < 3; $i++) {
-            $images[] =+ $generator->generate($this->text);
+            $images[] = +$generator->generate($this->text);
         }
 
         $pusher->trigger($this->task, self::CHANNEL, ['ids' => $images]);

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Generators;
 
-use Symfony\Component\Process\Process;
-
 /**
  * This is the doge meme generator class.
  *

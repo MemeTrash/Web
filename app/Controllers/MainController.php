@@ -44,9 +44,11 @@ class MainController extends Controller
      */
     public function generate(Container $container, Request $request)
     {
-        $inner = $container->make(random_int(0, 1) ? CatGenerator::class : DogeGenerator::class);
+        $doge = (bool) random_int(0, 1);
 
-        $generator = new ValidatingGenerator(new MultiGenerator($inner));
+        $inner = $container->make($doge ? CatGenerator::class : DogeGenerator::class);
+
+        $generator = new ValidatingGenerator(new MultiGenerator($inner, $doge ? 2 : 3));
 
         $images = $generator->start((string) $request->get('text'))->wait();
 

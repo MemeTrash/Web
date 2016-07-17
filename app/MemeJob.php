@@ -6,6 +6,7 @@ namespace App;
 
 use App\Generators\CatGenerator;
 use App\Generators\DogeGenerator;
+use App\Generators\MultiGenerator;
 use App\Generators\ValidatingGenerator;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -72,13 +73,10 @@ class MemeJob implements ShouldQueue
     public function handle(Container $container)
     {
         $pusher = $container->make(Pusher::class);
-        $generator = new ValidatingGenerator($container->make($this->doge ? CatGenerator::class : DogeGenerator::class));
+        $inner = $container->make($this->doge ? CatGenerator::class : DogeGenerator::class);
+        $generator = new ValidatingGenerator(new MultiGenerator($inner));
 
-        $images = [];
-
-        for ($i = 0; $i < 3; $i++) {
-            $images[] += $generator->generate($this->text);
-        }
+        $images = $generator->generate($this->text);
 
         $pusher->trigger($this->task, self::CHANNEL, ['ids' => $images]);
     }

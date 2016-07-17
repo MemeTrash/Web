@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Generations;
+namespace App\Generators;
 
 /**
  * This is the validating generator class.

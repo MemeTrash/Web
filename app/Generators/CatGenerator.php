@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Generations;
+namespace App\Generators;
 
 use Symfony\Component\Process\Process;
 

@@ -24,29 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ProcessRunner::class, function () {
-            return new ProcessRunner();
-        });
-
-        $this->app->singleton(CatGenerator::class, function (Container $app) {
-            return new CatGenerator(
-                $app->make(ProcessRunner::class),
-                $app->config->get('services.meme.cat'),
-                $app->basePath('resources/img'),
-                $app->basePath('public/result')
-            );
-        });
-
-        $this->app->singleton(DogeGenerator::class, function (Container $app) {
-            return new DogeGenerator(
-                $app->make(ProcessRunner::class),
-                $app->config->get('services.meme.doge'),
-                $app->basePath('public/result')
-            );
-        });
-
         $this->app->get('/', 'App\Controllers\MainController@show');
-
-        $this->app->post('lol', 'App\Controllers\MainController@generate');
     }
 }

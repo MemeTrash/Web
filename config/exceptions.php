@@ -19,7 +19,7 @@ return [
     */
 
     'transformers' => [
-        'App\Transformers\ValidationTransformer',
+        //
     ],
 
     /*
@@ -38,6 +38,7 @@ return [
 
     'displayers' => [
         'GrahamCampbell\Exceptions\Displayers\JsonDisplayer',
+        'GrahamCampbell\Exceptions\Displayers\JsonApiDisplayer',
     ],
 
     /*
@@ -54,7 +55,8 @@ return [
     */
 
     'filters' => [
-        //
+        'GrahamCampbell\Exceptions\Filters\CanDisplayFilter',
+        'GrahamCampbell\Exceptions\Filters\ContentTypeFilter',
     ],
 
     /*
@@ -84,9 +86,11 @@ return [
     */
 
     'levels' => [
-        'Symfony\Component\HttpKernel\Exception\HttpExceptionInterface' => 'warning',
-        'Symfony\Component\Debug\Exception\FatalErrorException'         => 'critical',
-        'Exception'                                                     => 'error',
+        'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'            => 'notice',
+        'Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException' => 'error',
+        'Symfony\Component\HttpKernel\Exception\HttpExceptionInterface'           => 'warning',
+        'Symfony\Component\Debug\Exception\FatalErrorException'                   => 'critical',
+        'Exception'                                                               => 'error',
     ],
 
 ];

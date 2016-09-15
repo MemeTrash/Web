@@ -24,17 +24,18 @@ function displayLoadingScreen() {
 function getImages(query) {
     displayLoadingScreen();
     $.post({
-        url: "/lol",
+        url: "https://api.memetrash.co.uk/cat",
         data: {
-            text: query
+            text: query,
+            quantity: 3
         }
     }).done(function (httpData) {
         var imageCont = document.createElement("div");
         imageCont.id = "downloadedImageInner"
 
-        httpData["data"]["images"].forEach(function (id) {
+        httpData["data"]["images"].forEach(function (image) {
             var newImage = document.createElement("img");
-            newImage.src = "result/" + id + ".jpg";
+            newImage.src = image;
             imageCont.appendChild(newImage);
         });
 

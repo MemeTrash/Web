@@ -24,6 +24,10 @@ class MainController extends Controller
      */
     public function show(Factory $view)
     {
-        return new Response($view->make('index'));
+        $response = new Response($view->make('index'));
+
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        return $response;
     }
 }

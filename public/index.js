@@ -25,6 +25,7 @@ function getImages(query) {
     displayLoadingScreen();
     $.post({
         url: "https://api.memetrash.co.uk/cat",
+        crossDomain: true,
         data: {
             text: query,
             quantity: 3

@@ -24,19 +24,4 @@ class ServiceProviderTest extends AbstractTestCase
     {
         return AppServiceProvider::class;
     }
-
-    public function testProcessRunnerIsInjectable()
-    {
-        $this->assertIsInjectable(ProcessRunner::class);
-    }
-
-    public function testCatGeneratorIsInjectable()
-    {
-        $this->assertIsInjectable(CatGenerator::class);
-    }
-
-    public function testDogeGeneratorIsInjectable()
-    {
-        $this->assertIsInjectable(DogeGenerator::class);
-    }
 }

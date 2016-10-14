@@ -48,6 +48,9 @@
             width ="300" height="100" />
             <img src="img/wars.jpg" alt="IcanHazCheesburger"
             width ="100" height="150" />
+            <div style="display:inline">
+                © Mike freeman
+            </div>
         </footer>
     </body>
 </html>

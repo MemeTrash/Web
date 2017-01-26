@@ -24,7 +24,7 @@ function displayLoadingScreen() {
 function getImages(query) {
     displayLoadingScreen();
     $.post({
-        url: "https://api.memetrash.co.uk/cat",
+        url: "https://api.memetrash.co.uk/".concat(Math.random() > 0.5 ? 'cat' : 'doge'),
         crossDomain: true,
         data: {
             text: query,
